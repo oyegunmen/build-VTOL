@@ -42,7 +42,7 @@ A 2:1 TWR is the industry standard and "golden rule" for safe, stable, and contr
 | Action | Effect 1 | Effect 2 | Result |
 | :--- | :--- | :--- | :--- |
 | **🔼 Propeller Diameter** | 🔼 Efficiency (at hover) | 🔻 Response Speed | Better for endurance; slower for racing. |
-| **🔼 Propeller Pitch** | 🔼 Top Speed | 🔻 Motor Heat | Higher velocity but higher current draw. |
+| **🔼 Propeller Pitch** | 🔼 Top Speed | 🔼 Motor Heat | Higher velocity but higher current draw. |
 | **🔼 Stator Diameter** | 🔼 Torque | 🔻 Efficiency | Better for swinging large, heavy props. |
 | **🔼 Stator Height** | 🔼 Power Handling | 🔼 Weight | Better heat dissipation for heavy loads. |
 
@@ -59,7 +59,7 @@ The motor and Electronic Speed Controller (ESC) must be selected for thermal saf
 | :--- | :--- | :--- | :--- |
 | **🔼 Motor KV** | 🔼 RPM | 🔻 Torque | Prioritize speed over lifting capacity. |
 
-> 🛡️ **Motor Heat:** Should never exceed 80°C (176°F) to avoid demagnetizing the bells.
+> 🛡️ **Motor Heat:** Should never exceed 80°C (176°F) to avoid demagnetizing the motor magnets.
 
 > 🛡️ **ESC Cooling:** In high-current builds, mount ESCs on the arms to benefit from propeller wash (active airflow) or add dedicated heatsinks.
 
