@@ -2,7 +2,7 @@ This repo contains an easy-to-follow guide and explanation for component selecti
 
 ## Glossary
 
-| Acronym | Full Form | Definition |
+| Acronym | Term | Definition |
 | :--- | :--- | :--- | 
 | **AUW** | All-Up Weight | Total weight at any moment during the flight or ground operation |
 | **TWR** | Thrust-to-Weight Ratio | Total max thrust divided by AUW |
