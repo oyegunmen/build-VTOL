@@ -60,6 +60,7 @@ The motor and Electronic Speed Controller (ESC) must be selected for thermal saf
 | **🔼 Motor KV** | 🔼 RPM | 🔻 Torque | Prioritize speed over lifting capacity. |
 
 > 🛡️ **Motor Heat:** Should never exceed 80°C (176°F) to avoid demagnetizing the bells.
+
 > 🛡️ **ESC Cooling:** In high-current builds, mount ESCs on the arms to benefit from propeller wash (active airflow) or add dedicated heatsinks.
 
 ## 3. Energy Storage Systems
@@ -81,6 +82,7 @@ The battery is the heaviest component and dictates total flight time (endurance)
 | **🔼 Current (Amps)** | 🔻 AWG Number | 🔻 Wire Thickness | Higher current draws require thicker copper. |
 
 > 🛡️ Use Anti-Spark connectors (XT90-S/AS150) to protect FC/ESC capacitors from voltage spikes.
+
 > 🛡️ **Safety Margin:** The 0.8 (80%) rule ensures you land before the battery voltage "sags" to a dangerous level, preventing permanent cell damage.
 
 ## 4. Flight Controller (FC) & Frame
@@ -106,9 +108,13 @@ The FC is the "brain" of multirotor, processing sensor data via PID (Proportiona
 * **[ExpressLRS](https://www.expresslrs.org/):** Open-source, ultra-low latency (up to 1000Hz). 2.4GHz for racing; 900MHz for long-range radio control link.
 
 > 🛡️ Set a Failsafe to "Drop" or "RTH" (Return to Launch) so the drone doesn't fly away if the signal is lost.
+
 > 🛡️ **Frequency Hopping:** Modern protocols like ELRS use Spread Spectrum technology to prevent "hijacking" or signal jamming in noisy environments.
+
 > 🛡️ **Unique ID/Binding:** Ensure every craft has a unique Binding Phrase so other pilots cannot accidentally control your drone.
+
 > 🛡️ **Telemetry Signing:** MAVLink can sign messages to verify the sender's identity and prevent unauthorized data injection (spoofing).
+
 > 🛡️ **Encryption:** MAVLink is not designed for encryption; it does not hide your data from observers. If a build requires communication to be hidden (private), you must ensure the data is encrypted in transit via a secure telemetry link or specialized hardware so third parties cannot read your mission data.
 
 ## 6. Ground Control Stations
