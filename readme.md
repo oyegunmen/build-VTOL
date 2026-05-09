@@ -19,7 +19,9 @@ This repo contains an easy-to-follow guide and explanation for component selecti
 | **AUW** | All-Up Weight | Total weight at any moment during the flight or ground operation |
 | **AWG** | American Wire Gauge | Standard for wire thickness; Lower number = Thicker wire. |
 | **BEC** | Battery Eliminator Circuit | Regulates high battery voltage down to 5V/12V for electronics. |
+| **CAN** | Controller Area Network | High-reliability industrial bus for daisy-chaining critical sensors/ESCs. |
 | **IMU** | Inertial Measurement Unit | Combined Gyroscope and Accelerometer for orientation. |
+| **I2C** | Inter-Integrated Circuit | A shared "bus" two-wire serial protocol for short-distance communication |
 | **KV** | Motor Velocity Constant | RPM a motor spins per 1 volt (no load) |
 | **MCU** | Microcontroller Unit | The "brain" chip on the FC (e.g., STM32 F4, F7, H7) |
 | **mAh** | Milliampere-hour | Unit of electrical charge; indicates battery capacity. |
@@ -107,8 +109,8 @@ The FC is the "brain" of multirotor, processing sensor data via PID (Proportiona
 * **Connectivity & Peripherals**
     * **UART:** Dedicated serial ports for two-way communication. Usage: Connecting Telemetry radios, GPS modules, Companion Computers, and On Screen Diaplay (OSD).
     * **External Buses:** Shared communication lines that allow multiple devices to be "[daisy-chained](https://en.wikipedia.org/wiki/Daisy_chain_(electrical_engineering))" to the autopilot.
-        * **I2C:** Common for low-speed peripherals like external Compasses (Magnetometers) and OLED displays.
-        * **CAN:** High-reliability industrial bus for Airspeed sensors, smart ESCs, and GPS; reduces wiring complexity and interference.
+        * **I2C:** Low-speed; used for external Compasses and Barometers. Sensitive to electromagnetic interference (EMI); keep wires short and away from high-current ESC leads.
+        * **CAN/UAVCAN:** High-reliability industrial bus for Airspeed sensors, Smart ESCs, and high-end GPS. Highly resistant to noise; preferred for long wing-cable runs in large VTOLs.
 * **Build vs Buy**
     * **DIY:** You can build a custom FC by integrating a standalone MCU (e.g. Teensy/STM32) with an external IMU and Magnetometer via I2C or CAN buses. This is common in research and prototyping (see [dRehmFlight](https://github.com/nickrehm/dRehmFlight) to build one).
     * **Off-the-Shelf:** All-in-one boards that include the MCU, sensors, and often a PDB. Best for rapid deployment and standardized reliability.
