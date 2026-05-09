@@ -1,5 +1,17 @@
 This repo contains an easy-to-follow guide and explanation for component selection for building VTOL (Vertical Take-Off and Landing) aircraft, for any application.
 
+## Table of Contents
+* [Glossary](#glossary)
+* [Physics & Aerodynamics](#1-physics--aerodynamics)
+* [Propulsion System](#2-propulsion-system)
+* [Energy Storage System](#3-energy-storage-systems)
+* [Flight Controller & Frame](#4-flight-controller-fc--frame)
+* [Radio Link & Communication](#5-radio-link--communication)
+* [Ground Control Stations](#6-ground-control-stations)
+* [Specialized Sensors & Payloads](#7-specialized-sensors--payloads)
+* [Build Workflow](#8-build-workflow)
+* [Resources](#resources)
+
 ## Glossary
 
 | Acronym | Term | Definition |
@@ -24,10 +36,10 @@ Multirotor flight is governed by the interaction between total weight (mg) and v
 
 Thrust equal to weight is practically useless for flight as it leaves no margin for control, wind resistance, or maneuvering.
 
-**Disk Loading**: Large propellers moving air slowly are more efficient than small propellers moving air quickly. This is why endurance drones use the largest props their frame allows.
+**[Disk Loading](https://en.wikipedia.org/wiki/Disk_loading)**: Large propellers moving air slowly are more efficient than small propellers moving air quickly. This is why endurance drones use the largest props their frame allows.
 
 ### TWR Matrix
-A 2:1 TWR is the industry standard and "golden rule" for safe, stable, and controllable operation. It allows you to hover at 50% throttle, leaving a "safety buffer" for maneuvering and wind resistance.
+A 2:1 TWR is the industry standard and "golden rule" for safe, stable, and controllable operation. It allows hover at 50% throttle, leaving a "safety buffer" for maneuvering and wind resistance.
 
 | Application | Target TWR | Hover Throttle | Performance Characteristics |
 | :--- | :--- | :--- | :--- |
@@ -39,24 +51,22 @@ A 2:1 TWR is the industry standard and "golden rule" for safe, stable, and contr
 | **Freestyle** | 4:1 – 6:1 | 15% - 25% | High agility for "punch-outs" and recovering from flips, rolls, and acrobatics |
 | **FPV Racing** | 4:1 – 10+ | 10% - 25% | Rapid acceleration, quick manoeuvres and smooth turns. |
 
+## 2. Propulsion System
+The motor and Electronic Speed Controller (ESC) must be selected for thermal safety.
+
+*   **Motor Size (e.g., 2207):** The first two digits are diameter (torque); the last two are height (power/heat dissipation).
+*   **[ESC Protocols](https://docs.px4.io/main/en/esc/esc_protocols):** The protocol determines how fast and accurately the FC communicates with the motors. The selection should be done based on application of your build.
+    *   **PWM / Oneshot125:** Analog unidirectional(FC to ESC) legacy protocols; high latency.
+    *   **DShot (300/600/1200):** A digital, bidirectional protocol.
+*   **ESC Safety:** Safety margin of **20-50 %** is recommended depending upon application. e.g. If motor draws I amount of current then ESC should be atleast able to handle 1.2I current for safety.
+
+### Trend
 | Action | Effect 1 | Effect 2 | Result |
 | :--- | :--- | :--- | :--- |
 | **🔼 Propeller Diameter** | 🔼 Efficiency (at hover) | 🔻 Response Speed | Better for endurance; slower for racing. |
 | **🔼 Propeller Pitch** | 🔼 Top Speed | 🔼 Motor Heat | Higher velocity but higher current draw. |
 | **🔼 Stator Diameter** | 🔼 Torque | 🔻 Efficiency | Better for swinging large, heavy props. |
 | **🔼 Stator Height** | 🔼 Power Handling | 🔼 Weight | Better heat dissipation for heavy loads. |
-
-## 2. Propulsion System
-The motor and Electronic Speed Controller (ESC) must be selected for thermal safety.
-
-*   **Motor Size (e.g., 2207):** The first two digits are diameter (torque); the last two are height (power/heat dissipation).
-*   **ESC Protocols:** The protocol determines how fast and accurately the FC communicates with the motors.
-    *   **PWM / Oneshot125:** Analog legacy protocols; high latency.
-    *   **DShot (300/600/1200):** Modern digital standard. DShot600 is the industry sweet spot for reliability and performance.
-*   **ESC Safety:** Safety margin of **20-50 %** is recommended depending upon application.
-
-| Action | Effect 1 | Effect 2 | Result |
-| :--- | :--- | :--- | :--- |
 | **🔼 Motor KV** | 🔼 RPM | 🔻 Torque | Prioritize speed over lifting capacity. |
 
 > 🛡️ **Motor Heat:** Should never exceed 80°C (176°F) to avoid demagnetizing the motor magnets.
@@ -75,6 +85,7 @@ The battery is the heaviest component and dictates total flight time (endurance)
 
 **Wiring Standards**: Higher current draws require thicker copper to prevent the wires from acting like a fuse and melting. Use silicone-insulated wire.
 
+### Trend
 | Action | Effect 1 | Effect 2 | Result |
 | :--- | :--- | :--- | :--- |
 | **🔼 Battery Voltage (S)** | 🔼 Efficiency | 🔻 Current ($I$) | Reduces heat in wires ($I^2R$ losses). |
@@ -133,7 +144,7 @@ The software bridge between the pilot and the machine.
 | **Mapping** | Lidar, High-Res Camera | 3D Modeling & Terrain Following |
 | **Agriculture** | RTK, Lidar, Flow Meter | Cm-level precision & obstacle avoidance |
 
-## 7. Build Workflow
+## 8. Build Workflow
 Follow these steps in order to avoid component incompatibility.
 1.  **Requirements:** Define functional requirements of the VTOL.
 2.  **Estimate AUW:**: Calculate the sum of payload, frame, and electronics.
@@ -145,7 +156,7 @@ Follow these steps in order to avoid component incompatibility.
 
 ## Resources
 *   [ArduPilot Documentation](https://ardupilot.org/ardupilot/)
-*   [Betaflight Wiki)](https://betaflight.com/docs/wiki)
+*   [Betaflight Wiki](https://betaflight.com/docs/wiki)
 *   [eCalc Flight Simulator](https://www.ecalc.ch)
 *   [Mavlink Docs](https://mavlink.io/en/)
 *   [PX4 Docs](https://docs.px4.io/main/)
