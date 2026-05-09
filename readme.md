@@ -17,15 +17,16 @@ This repo contains an easy-to-follow guide and explanation for component selecti
 | Acronym | Term | Definition |
 | :--- | :--- | :--- | 
 | **AUW** | All-Up Weight | Total weight at any moment during the flight or ground operation |
-| **TWR** | Thrust-to-Weight Ratio | Total max thrust divided by AUW |
-| **KV** | Motor Velocity Constant | RPM a motor spins per 1 volt (no load) |
-| **Sag** | Voltage Drop | Temporary decrease in battery voltage under heavy load. |
-| **MCU** | Microcontroller Unit | The "brain" chip on the FC (e.g., STM32 F4, F7, H7) |
-| **IMU** | Inertial Measurement Unit | Combined Gyroscope and Accelerometer for orientation. |
-| **PDB** | Power Distribution Board | Manages high current flow from battery to multiple ESCs. |
-| **mAh** | Milliampere-hour | Unit of electrical charge; indicates battery capacity. |
 | **AWG** | American Wire Gauge | Standard for wire thickness; Lower number = Thicker wire. |
 | **BEC** | Battery Eliminator Circuit | Regulates high battery voltage down to 5V/12V for electronics. |
+| **IMU** | Inertial Measurement Unit | Combined Gyroscope and Accelerometer for orientation. |
+| **KV** | Motor Velocity Constant | RPM a motor spins per 1 volt (no load) |
+| **MCU** | Microcontroller Unit | The "brain" chip on the FC (e.g., STM32 F4, F7, H7) |
+| **mAh** | Milliampere-hour | Unit of electrical charge; indicates battery capacity. |
+| **PDB** | Power Distribution Board | Manages high current flow from battery to multiple ESCs. |
+| **Sag** | Voltage Drop | Temporary decrease in battery voltage under heavy load. |
+| **TWR** | Thrust-to-Weight Ratio | Total max thrust divided by AUW |
+| **UART** | Universal Asynchronous Receiver/Transmitter | Dedicated serial ports for two-way communication. |
 
 ## 1. Physics & Aerodynamics
 Multirotor flight is governed by the interaction between total weight (mg) and vertical force (thrust).
@@ -69,9 +70,9 @@ The motor and Electronic Speed Controller (ESC) must be selected for thermal saf
 | **🔼 Stator Height** | 🔼 Power Handling | 🔼 Weight | Better heat dissipation for heavy loads. |
 | **🔼 Motor KV** | 🔼 RPM | 🔻 Torque | Prioritize speed over lifting capacity. |
 
-> 🛡️ **Motor Heat:** Should never exceed 80°C (176°F) to avoid demagnetizing the motor magnets.
+> **Motor Heat:** Should never exceed 80°C (176°F) to avoid demagnetizing the motor magnets.
 
-> 🛡️ **ESC Cooling:** In high-current builds, mount ESCs on the arms to benefit from propeller wash (active airflow) or add dedicated heatsinks.
+> **ESC Cooling:** In high-current builds, mount ESCs on the arms to benefit from propeller wash (active airflow) or add dedicated heatsinks.
 
 ## 3. Energy Storage Systems
 The battery is the heaviest component and dictates total flight time (endurance).
@@ -92,9 +93,9 @@ The battery is the heaviest component and dictates total flight time (endurance)
 | **🔼 mAh** | 🔼 Flight Time | 🔼 Weight | Increases Flight Time. |
 | **🔼 Current (Amps)** | 🔻 AWG Number | 🔻 Wire Thickness | Higher current draws require thicker copper. |
 
-> 🛡️ Use Anti-Spark connectors (XT90-S/AS150) to protect FC/ESC capacitors from voltage spikes.
+> Use Anti-Spark connectors (XT90-S/AS150) to protect FC/ESC capacitors from voltage spikes.
 
-> 🛡️ **Safety Margin:** The 0.8 (80%) rule ensures you land before the battery voltage "sags" to a dangerous level, preventing permanent cell damage.
+> **Safety Margin:** The 0.8 (80%) rule ensures you land before the battery voltage "sags" to a dangerous level, preventing permanent cell damage.
 
 ## 4. Flight Controller (FC) & Frame
 The FC is the "brain" of multirotor, processing sensor data via PID (Proportional-Integral-Derivative) control loop to stabilize the craft. It uses Sensor Fusion to combine data from the IMU (Gyro/Accel), Magnetometer (Compass), and Barometer (Altitude) into a single orientation estimate.
@@ -103,9 +104,14 @@ The FC is the "brain" of multirotor, processing sensor data via PID (Proportiona
     * **F4:** Legacy Budget workhorse.
     * **F7:** Highly popular; universal signal inversion on all UART ports.
     * **H7:** State-of-the-art; required for ArduPilot/PX4 and complex path planning.
+* **Connectivity & Peripherals**
+    * **UART:** Dedicated serial ports for two-way communication. Usage: Connecting Telemetry radios, GPS modules, Companion Computers, and On Screen Diaplay (OSD).
+    * **External Buses:** Shared communication lines that allow multiple devices to be "[daisy-chained](https://en.wikipedia.org/wiki/Daisy_chain_(electrical_engineering))" to the autopilot.
+        * **I2C:** Common for low-speed peripherals like external Compasses (Magnetometers) and OLED displays.
+        * **CAN:** High-reliability industrial bus for Airspeed sensors, smart ESCs, and GPS; reduces wiring complexity and interference.
 * **Build vs Buy**
-    * **DIY:** You can build a custom FC by integrating a standalone MCU (Teensy/STM32) with an external IMU and Magnetometer via I2C or SPI buses. This is common in research and prototyping (see [dRehmFlight](https://github.com/nickrehm/dRehmFlight)).
-    * **Off-the-Shelf:** All-in-one boards that include the MCU, sensors, and often a PDB or OSD chip. Best for rapid deployment and standardized reliability.
+    * **DIY:** You can build a custom FC by integrating a standalone MCU (e.g. Teensy/STM32) with an external IMU and Magnetometer via I2C or CAN buses. This is common in research and prototyping (see [dRehmFlight](https://github.com/nickrehm/dRehmFlight) to build one).
+    * **Off-the-Shelf:** All-in-one boards that include the MCU, sensors, and often a PDB. Best for rapid deployment and standardized reliability.
 * **AutoPilot** - Firmware required to be installed on FC
     * **[Ardupilot](https://ardupilot.org/):** Best for Industrial/GPS Missions. License: GPLv3.
     * **[PX4](https://px4.io/):** Best for Research & Enterprise. Professional-grade codebase, modular, and optimized for H7. License: BSD 3-Clause (Permissive).
@@ -118,15 +124,15 @@ The FC is the "brain" of multirotor, processing sensor data via PID (Proportiona
 * **[MAVLink](https://mavlink.io/):** Open-source, standard communication language used between the drone and Ground Control Stations (GCS) for telemetry and mission planning.
 * **[ExpressLRS](https://www.expresslrs.org/):** Open-source, ultra-low latency (up to 1000Hz). 2.4GHz for racing; 900MHz for long-range radio control link.
 
-> 🛡️ Set a Failsafe to "Drop" or "RTH" (Return to Launch) so the drone doesn't fly away if the signal is lost.
+> Set a Failsafe to "Drop" or "RTH" (Return to Launch) so the drone doesn't fly away if the signal is lost.
 
-> 🛡️ **Frequency Hopping:** Modern protocols like ELRS use Spread Spectrum technology to prevent "hijacking" or signal jamming in noisy environments.
+> **Frequency Hopping:** Modern protocols like ELRS use Spread Spectrum technology to prevent "hijacking" or signal jamming in noisy environments.
 
-> 🛡️ **Unique ID/Binding:** Ensure every craft has a unique Binding Phrase so other pilots cannot accidentally control your drone.
+> **Unique ID/Binding:** Ensure every craft has a unique Binding Phrase so other pilots cannot accidentally control your drone.
 
-> 🛡️ **Telemetry Signing:** MAVLink can sign messages to verify the sender's identity and prevent unauthorized data injection (spoofing).
+> **Telemetry Signing:** MAVLink can sign messages to verify the sender's identity and prevent unauthorized data injection (spoofing).
 
-> 🛡️ **Encryption:** MAVLink is not designed for encryption; it does not hide your data from observers. If a build requires communication to be hidden (private), you must ensure the data is encrypted in transit via a secure telemetry link or specialized hardware so third parties cannot read your mission data.
+> **Encryption:** MAVLink is not designed for encryption; it does not hide your data from observers. If a build requires communication to be hidden (private), you must ensure the data is encrypted in transit via a secure telemetry link or specialized hardware so third parties cannot read your mission data.
 
 ## 6. Ground Control Stations
 The software bridge between the pilot and the machine.
