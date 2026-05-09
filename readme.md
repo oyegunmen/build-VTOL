@@ -61,7 +61,7 @@ The motor and Electronic Speed Controller (ESC) must be selected for thermal saf
 *   **[ESC Protocols](https://docs.px4.io/main/en/esc/esc_protocols):** The protocol determines how fast and accurately the FC communicates with the motors. The selection should be done based on application of your build.
     *   **PWM / Oneshot125:** Analog unidirectional(FC to ESC) legacy protocols; high latency.
     *   **DShot (300/600/1200):** A digital, bidirectional protocol.
-*   **ESC Safety:** Safety margin of **20-50 %** is recommended depending upon application. e.g. If motor draws I amount of current then ESC should be atleast able to handle 1.2I current for safety.
+*   **ESC Safety:** Safety margin of **20-50 %** is recommended depending upon application. e.g. If motor draws $I$ amount of current then ESC should be atleast able to handle $1.2I$ current for safety.
 
 ### Trend
 | Action | Effect 1 | Effect 2 | Result |
